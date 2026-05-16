@@ -1,0 +1,17 @@
+class Solution:
+    def isGood(self, nums: List[int]) -> bool:
+        nums.sort()
+
+        n = nums[-1]
+
+        # length must be n + 1
+        if len(nums) != n + 1:
+            return False
+
+        # check 1 to n-1
+        for i in range(n - 1):
+            if nums[i] != i + 1:
+                return False
+
+        # last two elements must be n
+        return nums[-1] == nums[-2]
