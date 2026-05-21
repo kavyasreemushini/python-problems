@@ -1,0 +1,24 @@
+class Solution:
+    def longestCommonPrefix(self, arr1, arr2):
+        prefix_set = set()
+
+        # Store all prefixes of arr1
+        for num in arr1:
+            s = str(num)
+            temp = ""
+            for ch in s:
+                temp += ch
+                prefix_set.add(temp)
+
+        max_len = 0
+
+        # Check prefixes from arr2
+        for num in arr2:
+            s = str(num)
+            temp = ""
+            for ch in s:
+                temp += ch
+                if temp in prefix_set:
+                    max_len = max(max_len, len(temp))
+
+        return max_len
