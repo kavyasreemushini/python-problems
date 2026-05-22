@@ -1,0 +1,57 @@
+class Solution:
+    def solveSudoku(self, board):
+
+        rows = [set() for _ in range(9)]
+        cols = [set() for _ in range(9)]
+        boxes = [set() for _ in range(9)]
+
+        # Fill existing numbers
+        for i in range(9):
+            for j in range(9):
+
+                if board[i][j] != '.':
+                    num = board[i][j]
+
+                    rows[i].add(num)
+                    cols[j].add(num)
+
+                    boxIndex = (i // 3) * 3 + (j // 3)
+                    boxes[boxIndex].add(num)
+
+        def solve():
+
+            for i in range(9):
+                for j in range(9):
+
+                    if board[i][j] == '.':
+
+                        for num in '123456789':
+
+                            boxIndex = (i // 3) * 3 + (j // 3)
+
+                            if (num not in rows[i] and
+                                num not in cols[j] and
+                                num not in boxes[boxIndex]):
+
+                                # place
+                                board[i][j] = num
+
+                                rows[i].add(num)
+                                cols[j].add(num)
+                                boxes[boxIndex].add(num)
+
+                                if solve():
+                                    return True
+
+                                # backtrack
+                                board[i][j] = '.'
+
+                                rows[i].remove(num)
+                                cols[j].remove(num)
+                                boxes[boxIndex].remove(num)
+
+                        return False
+
+            return True
+
+        solve()
