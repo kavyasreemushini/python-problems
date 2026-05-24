@@ -1,0 +1,27 @@
+class Solution:
+    def combinationSum(self, candidates, target):
+
+        res = []
+
+        def backtrack(i, curr, total):
+
+            # found answer
+            if total == target:
+                res.append(curr[:])
+                return
+
+            # out of bounds
+            if i >= len(candidates) or total > target:
+                return
+
+            # take current element
+            curr.append(candidates[i])
+            backtrack(i, curr, total + candidates[i])
+
+            # don't take current element
+            curr.pop()
+            backtrack(i + 1, curr, total)
+
+        backtrack(0, [], 0)
+
+        return res
